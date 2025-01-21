@@ -6,7 +6,7 @@
 /*   By: aalegria <aalegria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:38:19 by aalegria          #+#    #+#             */
-/*   Updated: 2025/01/21 13:36:48 by aalegria         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:55:48 by aalegria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ static void malloc_error(void)
 {
 	perror("Problems with malloc");
 	exit(EXIT_FAILURE);
+}
+
+void	data_init(t_fractal *fractal)
+{
+	fractal->escape_value = 4;
 }
 
 void	fractal_init(tfractal *fractal)
@@ -42,4 +47,5 @@ void	fractal_init(tfractal *fractal)
 	}
 	fractal->img.pixels_ptr = mlx_get_data_addr(fractal->img.img_ptr,
 			&fractal->img.bpp, &fractal->img.line_len, &fractal->img.endian);
+	data_init(fractal);
 }

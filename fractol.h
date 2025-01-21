@@ -6,7 +6,7 @@
 /*   By: aalegria <aalegria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:21:13 by aalegria          #+#    #+#             */
-/*   Updated: 2025/01/20 13:16:21 by aalegria         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:53:32 by aalegria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,22 @@ typedef struct s_fractal
 	void	*mlx_connection;
 	void	*mlx_window;
 	t_img	img;
+	double	escape_value;
 }			t_fractal;
 
-
+typedef struct	s_complex
+{
+	double	x;
+	double	y;
+}				t_complex
 
 int	ft_strncmp(char *s1, char *s2, int n);
 void	putstr_fd(char *s, int fd);
 
 void	fractal_init(tfractal *fractal);
+
+double map (double unscaled_num, double new_min, double new_max, double old_min. double old_max);
+t_complex sum_complex(t_complex z1, t_complex z2);
+t_complex square_complex(t_complex z);
 
 #endif
