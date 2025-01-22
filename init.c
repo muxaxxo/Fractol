@@ -6,7 +6,7 @@
 /*   By: aalegria <aalegria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 16:38:19 by aalegria          #+#    #+#             */
-/*   Updated: 2025/01/21 15:55:48 by aalegria         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:45:58 by aalegria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void malloc_error(void)
 void	data_init(t_fractal *fractal)
 {
 	fractal->escape_value = 4;
+	fractal->iterations_definition = 42;
 }
 
 void	fractal_init(tfractal *fractal)

@@ -6,7 +6,7 @@
 /*   By: aalegria <aalegria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:21:13 by aalegria          #+#    #+#             */
-/*   Updated: 2025/01/21 15:53:32 by aalegria         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:38:46 by aalegria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,30 @@
 
 #define WIDTH	800
 #define HEIGTH	800
+
+# define BLACK       0x000000
+# define WHITE       0xFFFFFF
+# define RED         0xFF0000
+# define GREEN       0x00FF00
+# define BLUE        0x0000FF
+# define YELLOW      0xFFFF00
+# define CYAN        0x00FFFF
+# define MAGENTA     0xFF00FF
+
+# define BRIGHT_RED      0xFF6666
+# define BRIGHT_GREEN    0x66FF66
+# define BRIGHT_BLUE     0x6666FF
+# define BRIGHT_YELLOW   0xFFFF66
+# define BRIGHT_CYAN     0x66FFFF
+# define BRIGHT_MAGENTA  0xFF66FF
+
+# define RAINBOW         0xFF77FF
+# define TRIPPY_CYAN     0x77FFFF
+# define ACID_GREEN      0x88FF00
+# define PURPLE_HAZE     0x8800FF
+# define NEON_RAVE       0xFF1188
+# define LIME_SHOCK      0x99FF33
+
 
 typedef struct s_img
 {
@@ -43,6 +67,7 @@ typedef struct s_fractal
 	void	*mlx_window;
 	t_img	img;
 	double	escape_value;
+	int 	iterations_definition;
 }			t_fractal;
 
 typedef struct	s_complex
