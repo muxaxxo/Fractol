@@ -6,7 +6,7 @@
 /*   By: aalegria <aalegria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:21:13 by aalegria          #+#    #+#             */
-/*   Updated: 2025/01/22 16:38:46 by aalegria         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:52:40 by aalegria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
+# include <X11/X.h>
+# include <X11/keysym.h>
 # include "minilibx-linux/mlx.h"
 
 #define ERROR_MESSAGE "Pleaseenter \n\t\"./fractol mandelbrot\" or
 		\n\t\"./fractol julia <value_1> <value_2>\"\n"
 
 #define WIDTH	800
-#define HEIGTH	800
+#define HEIGHT	800
 
 # define BLACK       0x000000
 # define WHITE       0xFFFFFF
@@ -68,6 +70,8 @@ typedef struct s_fractal
 	t_img	img;
 	double	escape_value;
 	int 	iterations_definition;
+	double	shift_x;
+	double	shift_y;
 }			t_fractal;
 
 typedef struct	s_complex
@@ -81,8 +85,12 @@ void	putstr_fd(char *s, int fd);
 
 void	fractal_init(tfractal *fractal);
 
+void	fractal_render(t__fractal *fractal);
+
 double map (double unscaled_num, double new_min, double new_max, double old_min. double old_max);
 t_complex sum_complex(t_complex z1, t_complex z2);
 t_complex square_complex(t_complex z);
+
+int	key_handler(int keysym, t_fractal *fractal);
 
 #endif

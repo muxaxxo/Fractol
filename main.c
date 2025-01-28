@@ -6,7 +6,7 @@
 /*   By: aalegria <aalegria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:13:19 by aalegria          #+#    #+#             */
-/*   Updated: 2025/01/21 13:36:04 by aalegria         ###   ########.fr       */
+/*   Updated: 2025/01/23 15:58:44 by aalegria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, int **argv)
 	}
 	else
 	{
-		putrstr_fd(ERROR_MESSAG, STDERR_FILEN0); //NO SE SI ESTA LINEA ESTA BIEN, HAY QUE REVISAR
+		putrstr_fd(ERROR_MESSAG, STDERR_FILEN0);
 		exit(EXIT_FAILURE)
 	}
 }
