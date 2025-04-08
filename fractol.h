@@ -6,91 +6,101 @@
 /*   By: aalegria <aalegria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:21:13 by aalegria          #+#    #+#             */
-/*   Updated: 2025/01/28 16:52:40 by aalegria         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:38:40 by aalegria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
 # include <math.h>
-# include <X11/X.h>
-# include <X11/keysym.h>
+
+# include "libft/libft.h"
 # include "minilibx-linux/mlx.h"
 
-#define ERROR_MESSAGE "Pleaseenter \n\t\"./fractol mandelbrot\" or
-		\n\t\"./fractol julia <value_1> <value_2>\"\n"
-
-#define WIDTH	800
-#define HEIGHT	800
-
-# define BLACK       0x000000
-# define WHITE       0xFFFFFF
-# define RED         0xFF0000
-# define GREEN       0x00FF00
-# define BLUE        0x0000FF
-# define YELLOW      0xFFFF00
-# define CYAN        0x00FFFF
-# define MAGENTA     0xFF00FF
-
-# define BRIGHT_RED      0xFF6666
-# define BRIGHT_GREEN    0x66FF66
-# define BRIGHT_BLUE     0x6666FF
-# define BRIGHT_YELLOW   0xFFFF66
-# define BRIGHT_CYAN     0x66FFFF
-# define BRIGHT_MAGENTA  0xFF66FF
-
-# define RAINBOW         0xFF77FF
-# define TRIPPY_CYAN     0x77FFFF
-# define ACID_GREEN      0x88FF00
-# define PURPLE_HAZE     0x8800FF
-# define NEON_RAVE       0xFF1188
-# define LIME_SHOCK      0x99FF33
-
-
-typedef struct s_img
+typedef struct s_args
 {
-	void	*img_ptr;
-	char	*pixels_ptr;
-	int		bpp;
+	size_t	time;
+	double	zoom;
+	double	zoom_mov_x;
+	double	zoom_mov_y;
+	double	movement_x;
+	double	movement_y;
+	size_t	min_i;
+	size_t	max_i;
+}		t_args;
+
+typedef struct s_res
+{
+	int	x;
+	int	y;
+}			t_res;
+
+typedef struct s_win_d
+{
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
 	int		endian;
-	int		line_len;
-}			t_img;
+	t_res	res;
+}				t_win_d;
 
-
-
-typedef struct s_fractal
+typedef struct s_mandelbrot
 {
-	char	*name
-	void	*mlx_connection;
-	void	*mlx_window;
-	t_img	img;
-	double	escape_value;
-	int 	iterations_definition;
-	double	shift_x;
-	double	shift_y;
-}			t_fractal;
-
-typedef struct	s_complex
-{
+	double	x0;
 	double	x;
+	double	x2;
+	double	y0;
 	double	y;
-}				t_complex
+	double	y2;
+}			t_mandelbrot;
 
-int	ft_strncmp(char *s1, char *s2, int n);
-void	putstr_fd(char *s, int fd);
+typedef struct s_julia
+{
+	double	r;
+	double	zx;
+	double	zy;
+	double	cx;
+	double	cy;
+	double	n;
+	double	x_tmp;
+}			t_julia;
 
-void	fractal_init(tfractal *fractal);
+typedef struct s_render_data
+{
+	t_args	args;
+	t_win_d	img;
+	void	*mlx;
+	void	*win;
+	int		argc;
+	char	**argv;
+	t_julia	julia;
+}		t_render_data;
 
-void	fractal_render(t__fractal *fractal);
+// MAIN FUNCTIONS
 
-double map (double unscaled_num, double new_min, double new_max, double old_min. double old_max);
-t_complex sum_complex(t_complex z1, t_complex z2);
-t_complex square_complex(t_complex z);
+int		main(int argc, char *argv[]);
+void	create_hooks(t_render_data *r_d);
+int		draw(t_render_data *args);
+int		parse_args(t_render_data *args);
+int		notify_usage(void);
 
-int	key_handler(int keysym, t_fractal *fractal);
+// FRACTALS
+
+int		get_mandelbrot(int x, int y, t_res res, t_args args);
+
+int		get_julia(int x, int y, t_render_data *data, t_julia vs);
+void	construct(t_julia *this);
+
+// MEMORY MANAGEMENT
+
+void	check_err(t_win_d img, size_t bytes_written, void *mlx, void *win);
+
+void	free_all(t_render_data *d);
+//	Returns 1
+int		free_img(t_render_data *d);
+int		free_mlx(t_render_data *d);
+int		free_win(t_render_data *d);
 
 #endif

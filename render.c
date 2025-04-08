@@ -6,61 +6,70 @@
 /*   By: aalegria <aalegria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 13:37:32 by aalegria          #+#    #+#             */
-/*   Updated: 2025/01/28 16:43:07 by aalegria         ###   ########.fr       */
+/*   Updated: 2025/04/03 15:25:32 by aalegria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fractol/fractol.h"
+#include "fractol.h"
 
-static void	my_pixel_put(int x, int, y, t_img *img, int color)
-{
-	int	offset;
-
-	offset = (y * img->line_len) + (x * (img->bpp / 8));
-	*unsigned int *(img->pixels_ptr + offset) = color;
-}
-
-static void	handle_pixel(int x, int y, t_fractal *fractal)
-{
-	t_complex	z;
-	t_complex	c;
-	int			i;
-	int			color;
-
-	i = 0;
-	z.x = 0.0;
-	z.y = 0.0;
-	c.x = map(x, -2, +2, 0, WIDTH) + fractal->shift_x;
-	c.y = map(y, +2, -2, 0, HEIGHT) + fractal->shift_y;
-
-	while (i < fractal->iterations_definition)
-	{
-		z = sum_complex(square_complex(z), c);
-		if ((z.x * z.x) + (z.y * z.y) > fractal->escape_value)
-		{
-			color = map(i, BLACK, WHITE, 0, fractal->iterations_definition);
-			my_pixel_put(x, y, &fractal->img, color);
-			return ;
-		}
-		i++;
-	}
-	my_pixel_put(x, y, &fractal->img, TRIPPY_CYAN);
-}
-
-void	fractal_render(t__fractal *fractal)
+static int	draw_julia(t_render_data *args)
 {
 	int	x;
 	int	y;
+	int	i;
 
-	y = -1;
-	while (HEIGHT > y++)
+	x = 0;
+	while (x < args->img.res.x)
 	{
-		x = -1;
-		while (WIDTH > x++)
+		y = 0;
+		while (y < args->img.res.y)
 		{
-			handle_pixel (x, y, fractal);
+			i = y * args->img.res.x + x;
+			((int *)args->img.addr)[i] = get_julia(x, y, args, args->julia);
+			y++;
 		}
+		x++;
 	}
-	mlx_put_image_to_window(fractal->mlx_connection, fractal->mlx_window,
-		fractal->img.img_ptr, 0, 0);
+	return (0);
+}
+
+static int	draw_mandelbrot(t_render_data *args)
+{
+	int	x;
+	int	y;
+	int	i;
+
+	x = 0;
+	while (x < args->img.res.x)
+	{
+		y = 0;
+		while (y < args->img.res.y)
+		{
+			i = y * args->img.res.x + x;
+			((int *)args->img.addr)[i] = get_mandelbrot(x, y,
+					args->img.res, args->args);
+			y++;
+		}
+		x++;
+	}
+	return (0);
+}
+
+static int	route_drawing(t_render_data *args)
+{
+	if (!ft_strncmp(args->argv[1], "mandelbrot", 40))
+		return (draw_mandelbrot(args));
+	if (!ft_strncmp(args->argv[1], "julia", 40))
+		return (draw_julia(args));
+	return (1);
+}
+
+int	draw(t_render_data *args)
+{
+	if (route_drawing(args))
+	{
+		mlx_loop_end(args->mlx);
+		return (1);
+	}
+	return (0);
 }
